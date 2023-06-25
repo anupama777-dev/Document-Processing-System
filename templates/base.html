@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-D+BAQLP2iwsyB5AB6B44gU1EzTgckrHaD1nnDGku1FV/iXBUKJeQSRyJNNG40d/TFex6jZzuXAnMBSWuh+xKrA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    {% block css %}{% endblock %}
 </head>
 
 <body>
@@ -19,19 +21,15 @@
             aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="/dashboard">DPS</a>
+        <a class="navbar-brand" href="/">DPS</a>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" href="/dashboard">Home</a>
                 </li>
             </ul>
         </div>
     </nav>
-
-    <div id="promptContainer" class="prompt-container">
-        <div id="promptMessage" class="prompt-message"></div>
-    </div>
 
     {% block content %}
 

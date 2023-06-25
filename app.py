@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from wtforms import SubmitField, FileField
+from wtforms.validators import DataRequired
 from flask import jsonify
 from werkzeug.utils import secure_filename
 import os
@@ -23,13 +24,13 @@ class CategoryI(db.Model):
     doc_types = [('ref_journal', 'Refereed Journals'), ('non_ref', 'Non-refereed journals'), ('seminar', 'Seminar, Conference proceedings etc'), ('poster', 'Poster presentations')]
     doc_cat = [('inter', 'International'), ('national', 'National')]
     id = sa.Column(sa.BigInteger, autoincrement=True, primary_key=True)
-    faculty_type = sa.Column(ChoiceType(fac_types))
-    document_type = sa.Column(ChoiceType(doc_types))
-    document_category = sa.Column(ChoiceType(doc_cat))
-    document_file = sa.Column(sa.String(255))
+    faculty_type = sa.Column(ChoiceType(fac_types), nullable=False)
+    document_type = sa.Column(ChoiceType(doc_types), nullable=False)
+    document_category = sa.Column(ChoiceType(doc_cat), nullable=False)
+    document_file = sa.Column(sa.String(255), nullable=False)
 
 class CategoryIForm(ModelForm):
-    document_file = FileField('Document File')
+    document_file = FileField('Document File', validators=[DataRequired()])
     class Meta:
         model = CategoryI
         include_primary_keys = False
@@ -48,7 +49,7 @@ class CategoryII(db.Model):
 
 
 class CategoryIIForm(ModelForm):
-    document_file = FileField('Document File')
+    document_file = FileField('Document File', validators=[DataRequired()])
     class Meta:
         model = CategoryII
         include_primary_keys = True
@@ -67,7 +68,7 @@ class CategoryIII(db.Model):
     document_file = sa.Column(sa.String(255))
 
 class CategoryIIIForm(ModelForm):
-    document_file = FileField('Document File')
+    document_file = FileField('Document File', validators=[DataRequired()])
     class Meta:
         model = CategoryIII
         include_primary_keys = True
@@ -85,7 +86,7 @@ class CategoryIV(db.Model):
     document_file = sa.Column(sa.String(255))
 
 class CategoryIVForm(ModelForm):
-    document_file = FileField('Document File')
+    document_file = FileField('Document File', validators=[DataRequired()])
     class Meta:
         model = CategoryIV
         include_primary_keys = True
@@ -103,7 +104,7 @@ class CategoryV(db.Model):
     document_file = sa.Column(sa.String(255))
 
 class CategoryVForm(ModelForm):
-    document_file = FileField('Document File')
+    document_file = FileField('Document File', validators=[DataRequired()])
     class Meta:
         model = CategoryV
         include_primary_keys = True
@@ -111,7 +112,7 @@ class CategoryVForm(ModelForm):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('dashboard.html')
+    return render_template('login.html')
 
 @app.route('/dashboard', methods = ['GET', 'POST'])
 def dashboard():

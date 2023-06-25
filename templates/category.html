@@ -2,6 +2,10 @@
 
 {% block title %} {{category}} {% endblock %}
 
+{% block css %}
+  <link rel="stylesheet" href="/static/dashboard.css">
+{% endblock %}
+
 {% block content %}
   <div class="container">
     <div class="category text-center">
@@ -26,7 +30,7 @@
         <div class="mb-5" style="width: 50%;">
           File {{ form.document_file(size=30, class="form-control") }}
         </div>
-        {{ form.submit(class="btn btn-primary") }}
+        {{ form.submit(class="btn") }}
       </form>
     </div>
   </div>
