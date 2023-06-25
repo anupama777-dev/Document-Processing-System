@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Document Processing System {% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-D+BAQLP2iwsyB5AB6B44gU1EzTgckrHaD1nnDGku1FV/iXBUKJeQSRyJNNG40d/TFex6jZzuXAnMBSWuh+xKrA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/dashboard">DPS</a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="promptContainer" class="prompt-container">
+        <div id="promptMessage" class="prompt-message"></div>
+    </div>
+
+    {% block content %}
+
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script>
+        function submitForm() {
+  $.ajax({
+    url: '/process',
+    type: 'POST',
+    data: $('#categoryForm').serialize(),
+    success: function (response) {
+      var confirmationMessage = response.message;
+      showDialog(confirmationMessage);
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
+}
+
+function showDialog(message) {
+  var dialogBox = $('<div>', {
+    class: 'dialog-box',
+    text: message
+  });
+  $('body').append(dialogBox);
+
+  setTimeout(function () {
+    dialogBox.remove();
+  }, 3000); // Adjust the duration (in milliseconds) as needed
+}
+
+        var category = "{{ category }}".trim()
+        if (category === 'Category I') {
+            $(document).ready(function () {
+                $('#document_type').change(function () {
+                    var selectedType = $(this).val();
+                    if (selectedType === 'poster' || selectedType === 'seminar') {
+                        $('#document_category_field').show();
+                    } else {
+                        $('#document_category_field').hide();
+                    }
+                });
+                $('#document_type').change();
+            });
+        }
+
+        if (category === 'Category II') {
+            $(document).ready(function () {
+                $('#document_type').change(function () {
+                    var selectedType = $(this).val();
+                    if (selectedType === 'articles') {
+                        $('#document_category_field').show();
+                    } else {
+                        $('#document_category_field').hide();
+                    }
+                });
+                $('#document_type').change();
+            });
+        }
+
+        if (category === 'Category III') {
+            $(document).ready(function () {
+                $('#faculty_type, #document_type').change(function () {
+                    var selectedFaculty = $('#faculty_type').val();
+                    var selectedType = $('#document_type').val()
+                    var $documentCategory = $('#document_category');
+                    $documentCategory.empty()
+                    if (selectedFaculty === 'engg') {
+                        if (selectedType === 'sponsor') {
+                            $documentCategory.append($('<option>', { value: 'major1', text: 'Major Projects with grants above 30 lakhs' }));
+                            $documentCategory.append($('<option>', { value: 'major2', text: 'Major Projects with grants above 5 lakhs' }));
+                            $documentCategory.append($('<option>', { value: 'minor1', text: 'Minor Projects with grants above 50,000 and below 5 lakhs' }));
+                            $documentCategory.append($('<option>', { value: 'minor2', text: 'Minor Projects with grants above 5000 and below 50,000' }));
+                        }
+                        else if (selectedType === 'consult') {
+                            $documentCategory.append($('<option>', { value: 'opt1', text: 'Amount mobilized with minimum 3 lakhs' }));
+                            $documentCategory.append($('<option>', { value: 'opt2', text: 'Amount between 5000 and 3 lakhs' }));
+                        }
+                        else if (selectedType === 'quality_eval') {
+                            $documentCategory.append($('<option>', { value: 'proj_report', text: 'Completed Project Report' }));
+
+                        }
+                        else if (selectedType === 'proj_outcome') {
+                            $documentCategory.append($('<option>', { value: 'opt1', text: 'Major policy document of Govt. bodies/Technology transfer/Product/Process' }));
+
+                        }
+                        else if (selectedType === 'grants') {
+                            $documentCategory.append($('<option>', { value: 'grant1', text: 'Above 1 lakh' }));
+                            $documentCategory.append($('<option>', { value: 'grant2', text: 'Above 50,000 and below 1 lakh' }));
+                        }
+                    } else {
+                        if (selectedType === 'sponsor') {
+                            $documentCategory.append($('<option>', { value: 'major1', text: 'Major Projects with grants above 5 lakhs' }));
+                            $documentCategory.append($('<option>', { value: 'major2', text: 'Major Projects with grants above 3 lakhs' }));
+                            $documentCategory.append($('<option>', { value: 'minor1', text: 'Minor Projects with grants above 25,000 and below 3 lakhs' }));
+                            $documentCategory.append($('<option>', { value: 'minor2', text: 'Minor Projects with grants above 5000 and below 25,000' }));
+                        }
+                        else if (selectedType === 'consult') {
+                            $documentCategory.append($('<option>', { value: 'opt1', text: 'Amount mobilized with minimum 1 lakhs' }));
+                            $documentCategory.append($('<option>', { value: 'opt2', text: 'Amount between 5000 and 1 lakhs' }));
+                        }
+                        else if (selectedType === 'quality_eval') {
+                            $documentCategory.append($('<option>', { value: 'proj_report', text: 'Completed Project Report' }));
+
+                        }
+                        else if (selectedType === 'proj_outcome') {
+                            $documentCategory.append($('<option>', { value: 'opt1', text: 'Major policy document of Govt. bodies/Technology transfer/Product/Process' }));
+
+                        }
+                        else if (selectedType === 'grants') {
+                            $documentCategory.append($('<option>', { value: 'grant1', text: 'Above 0.75 lakh' }));
+                            $documentCategory.append($('<option>', { value: 'grant2', text: 'Above 5000 and below 0.75 lakh' }));
+                        }
+                    }
+                });
+                $('#faculty_type,#document_type').change();
+            })
+        }
+
+        if (category === 'Category IV') {
+            $(document).ready(function () {
+                $('#document_type').change(function () {
+                    var selectedType = $(this).val();
+                    var $documentCategory = $('#document_category');
+                    $documentCategory.empty()
+                    if (selectedType === 'mphil')
+                        $documentCategory.append($('<option>', { value: 'op1', text: 'Degree awarded only' }));
+                    else if (selectedType === 'phd') {
+                        $documentCategory.append($('<option>', { value: 'op1', text: 'Degree awarded for scholar' }));
+                        $documentCategory.append($('<option>', { value: 'op2', text: 'Thesis submitted by scholar' }));
+                        $documentCategory.append($('<option>', { value: 'op3', text: 'Guiding the Scholar' }));
+                        $documentCategory.append($('<option>', { value: 'op4', text: 'Faculty doing Ph.D' }));
+                        $documentCategory.append($('<option>', { value: 'op4', text: 'Faculty awarded Ph.D during the current academic year' }));
+                    }
+                    else if (selectedType === 'ug') {
+                        $documentCategory.append($('<option>', { value: 'op1', text: 'Degree awarded' }));
+                    }
+                })
+                $('#document_type').change();
+            })
+        }
+
+        if (category === 'Category V') {
+            $(document).ready(function () {
+                $('#document_type').change(function () {
+                    var selectedType = $(this).val();
+                    var $documentCategory = $('#document_category');
+                    $documentCategory.empty()
+                    if (selectedType === 'workshop') {
+                        $documentCategory.append($('<option>', { value: 'op1', text: 'Not less than 2 weeks' }));
+                        $documentCategory.append($('<option>', { value: 'op2', text: 'One week' }));
+                        $documentCategory.append($('<option>', { value: 'op3', text: '3 days' }));
+                        $documentCategory.append($('<option>', { value: 'op4', text: '2 days' }));
+                        $documentCategory.append($('<option>', { value: 'op5', text: '1 day' }));
+                    }
+                    else if (selectedType === 'paper') {
+                        $documentCategory.append($('<option>', { value: 'op1', text: 'International' }));
+                        $documentCategory.append($('<option>', { value: 'op2', text: 'National' }));
+                        $documentCategory.append($('<option>', { value: 'op3', text: 'Regional/State level' }));
+                        $documentCategory.append($('<option>', { value: 'op4', text: 'Local College level' }));
+                    }
+                    else if (selectedType === 'lecture') {
+                        $documentCategory.append($('<option>', { value: 'op1', text: 'International' }));
+                        $documentCategory.append($('<option>', { value: 'op2', text: 'National level' }));
+                        $documentCategory.append($('<option>', { value: 'op3', text: 'State level' }));
+
+                    }
+                })
+                $('#document_type').change();
+            })
+        }
+    </script>
+</body>
+
+</html>

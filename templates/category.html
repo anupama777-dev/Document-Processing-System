@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} {{category}} {% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="category text-center">
+      <form id="categoryForm" action="{{ url_for('process_form') }}" class="d-flex flex-column align-items-center" method="post" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        <input type="hidden" name="category" value="{{ category }}">
+        <div class="mb-5" style="width: 50%">
+          Faculty Type {{ form.faculty_type(class="form-control")}}
+        </div>
+        <div class="mb-5" style="width: 50%">
+          Document Type {{ form.document_type(class="form-control")}}
+        </div>
+        {% if category == 'Category II' or category == 'Category I' %}
+        <div class="mb-5" id="document_category_field" style="display: none; width: 50%;">
+          Category {{ form.document_category(class="form-control") }}
+        </div>
+        {% else %}
+        <div class="mb-5" style="width: 50%;">
+          Category {{ form.document_category(class="form-control") }}
+        </div>
+        {% endif %}
+        <div class="mb-5" style="width: 50%;">
+          File {{ form.document_file(size=30, class="form-control") }}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

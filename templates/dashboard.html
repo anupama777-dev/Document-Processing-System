@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<div class="container">
+  <form action="{{ url_for('dashboard')}}" method="post">
+    <div class="row">
+      <div class="col-md-3 d-flex justify-content-center">
+        <button class="raise" name="category" value="Category I">
+          <a href="/dashboard">
+            <img src="/static/images/search.png" alt="Cat 1">
+            <span>Category 1</span>
+          </a>
+        </button>
+      </div>
+      <div class="col-md-3 d-flex justify-content-center">
+        <button class="raise" name="category" value="Category II">
+          <a href="/dashboard">
+            <img src="/static/images/research.png" alt="Cat 2">
+            <span>Category II</span>
+          </a>
+        </button>
+      </div>
+      <div class="col-md-3 d-flex justify-content-center">
+        <button class="raise" name="category" value="Category III">
+          <a href="/dashboard">
+            <img src="/static/images/search-analysis.png" alt="Cat 3">
+            <span>Category III</span>
+          </a>
+        </button>
+      </div>
+      <div class="col-md-3 d-flex justify-content-center">
+        <button class="raise" name="category" value="Category IV">
+          <a href="/dashboard">
+            <img src="/static/images/research-and-development.png" alt="Cat 4">
+            <span>Category IV</span>
+          </a>
+        </button>
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-md-3 last d-flex justify-content-center">
+        <button class="raise" name="category" value="Category V">
+          <a href="/dashboard">
+            <img src="/static/images/research2.png" alt="Cat 5">
+            <span>Category V</span>
+          </a>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
